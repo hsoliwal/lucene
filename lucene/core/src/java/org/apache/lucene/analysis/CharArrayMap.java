@@ -281,6 +281,8 @@ public class CharArrayMap<V> extends AbstractMap<Object, V> {
 
   private int getHashCode(CharSequence text) {
     if (text == null) throw new NullPointerException();
+    // Keep case folding unchanged; case-sensitive String uses this same UTF-16 hash.
+    if (!ignoreCase && text instanceof String str) return str.hashCode();
     int code = 0;
     int len = text.length();
     if (ignoreCase) {

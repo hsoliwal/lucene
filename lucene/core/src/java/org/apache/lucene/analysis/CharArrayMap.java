@@ -281,6 +281,10 @@ public class CharArrayMap<V> extends AbstractMap<Object, V> {
 
   private int getHashCode(CharSequence text) {
     if (text == null) throw new NullPointerException();
+    // String owns the exact UTF-16 hash (including M3-backed runtime implementations).
+    if (!ignoreCase && text instanceof String value) {
+      return value.hashCode();
+    }
     int code = 0;
     int len = text.length();
     if (ignoreCase) {

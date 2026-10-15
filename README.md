@@ -50,12 +50,60 @@ comprehensive documentation, visit:
 
 We'll assume that you know how to get and set up the JDK - if you don't, then we suggest starting at <https://jdk.java.net/> and learning more about Java, before returning to this README.
 
+### Build and test a focused change
+
+Run commands from the checkout root using the checked-in wrapper (`./gradlew`
+on Unix-like systems, or `gradlew.bat` on Windows), rather than a separately
+installed Gradle. The wrapper downloads the required Gradle version on first use.
+Some validation tasks, including those reached by `check`, also require Perl and
+Python 3; see the [contributor prerequisites](./CONTRIBUTING.md#pre-requisites).
+
+Start with a single module or test before running the full verification suite:
+
+```bash
+# Assemble the core JAR; output is under lucene/core/build/libs/
+./gradlew -p lucene/core assemble
+
+# Run the core indexing-and-search example as a test
+./gradlew -p lucene/core test --tests org.apache.lucene.TestDemo
+
+# Run core tests and validation tasks
+./gradlew -p lucene/core check
+
+# Run repository-wide tests and validation tasks
+./gradlew check
+```
+
+A passing focused test is not a replacement for repository-wide validation.
+Some expensive or externally dependent checks are omitted locally and run in CI;
+see [Testing](./help/tests.md) for filtering, randomization seeds, and reruns.
+
+To build API documentation for this checkout, run `./gradlew documentation`;
+the generated site is under `lucene/documentation/build/site`. More build targets
+and output locations are listed in the [workflow guide](./help/workflow.md).
+
+## Exploring the source
+
+- [Core API overview](./lucene/core/src/java/overview.html): an introduction to
+  indexing and searching with Lucene.
+- [Core TestDemo](./lucene/core/src/test/org/apache/lucene/TestDemo.java): a small,
+  executable example that writes documents, searches terms and phrases, and reads
+  stored fields. The focused test command above runs this example.
+- [IndexFiles](./lucene/demo/src/java/org/apache/lucene/demo/IndexFiles.java) and
+  [SearchFiles](./lucene/demo/src/java/org/apache/lucene/demo/SearchFiles.java):
+  command-line examples for indexing files and searching the resulting index.
+  Use a disposable index directory when exploring: `IndexFiles` defaults to
+  creating a new index, replacing previously indexed documents at that path.
+- [Migration guide](./lucene/MIGRATE.md): API and behavior changes to review when
+  moving between Lucene versions.
+
 ## Contributing
 
 Bug fixes, improvements and new features are always welcome!
 Please review the [Contributing to Lucene
 Guide](./CONTRIBUTING.md) for information on
-contributing.
+contributing. AI-assisted contributions must also follow the [AI Policy](./AI_POLICY.md),
+including its human review and ownership requirements.
 
 - Additional Developer Documentation: [dev-docs/](./dev-docs/)
 

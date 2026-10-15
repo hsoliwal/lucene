@@ -24,9 +24,20 @@ import java.io.Reader;
  */
 final class ReusableStringReader extends Reader {
   private int pos = 0, size = 0;
-  private String s = null;
+  private CharSequence s = null;
 
   void setValue(String s) {
+    this.s = s;
+    this.size = s.length();
+    this.pos = 0;
+  }
+
+  // M3: borrow immutable composite text; retain original String null/exception behavior.
+  void setValue(CharSequence s) {
+    if (s == null || s instanceof String) {
+      setValue((String) s);
+      return;
+    }
     this.s = s;
     this.size = s.length();
     this.pos = 0;
@@ -35,7 +46,9 @@ final class ReusableStringReader extends Reader {
   @Override
   public int read() {
     if (pos < size) {
-      return s.charAt(pos++);
+      return s == null || s instanceof String
+          ? ((String) s).charAt(pos++)
+          : s.charAt(pos++);
     } else {
       s = null;
       return -1;
@@ -46,7 +59,14 @@ final class ReusableStringReader extends Reader {
   public int read(char[] c, int off, int len) {
     if (pos < size) {
       len = Math.min(len, size - pos);
-      s.getChars(pos, pos + len, c, off);
+      if (s == null || s instanceof String) {
+        ((String) s).getChars(pos, pos + len, c, off);
+      } else {
+        java.util.Objects.checkFromIndexSize(off, len, c.length);
+        for (int i = 0; i < len; i++) {
+          c[off + i] = s.charAt(pos + i);
+        }
+      }
       pos += len;
       return len;
     } else {

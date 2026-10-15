@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: Apache-2.0
+name: M3 Lucene composite CharArrayMap contract
+
+on:
+  pull_request:
+    paths:
+      - 'lucene/core/src/test/org/apache/lucene/analysis/TestM3CharArrayMapStringHash.java'
+      - '.github/workflows/m3-lucene-composite-map-20261015.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lucene-composite-charsequence-parity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: Run real Lucene Gradle composite UTF-16 regression
+        run: ./gradlew :lucene:core:test --tests org.apache.lucene.analysis.TestM3CharArrayMapStringHash

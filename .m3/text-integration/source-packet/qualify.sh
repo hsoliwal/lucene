@@ -17,9 +17,9 @@ javac --release 21 -d "$out/classes" "$manifest" \
   "$packet/src/main/java/com/synexia/rewrite/M3TextRecipe.java" \
   "$packet/src/test/java/com/synexia/rewrite/Qualification.java"
 case "$mode" in
- apply) java -cp "$out/classes" com.synexia.rewrite.M3TextRecipe apply "$root" ;;
- verify) ;;
- *) echo "unknown mode: $mode" >&2; exit 2 ;;
+  apply) java -cp "$out/classes" com.synexia.rewrite.M3TextRecipe apply "$root" ;;
+  verify) ;;
+  *) echo "unknown mode: $mode" >&2; exit 2 ;;
 esac
 java -cp "$out/classes" com.synexia.rewrite.Qualification "$root"
 # Product builds remain authoritative. This bounded gate compiles only the admitted native atom.

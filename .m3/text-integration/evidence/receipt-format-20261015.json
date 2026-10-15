@@ -1,0 +1,14 @@
+{
+  "base_commit": "f7f06210befa7f075f6a70069f8732c953e32779",
+  "canonical_repository": "hsoliwal/com.synexia",
+  "canonical_commit": "43a52f0a97bf8b584b59979d70c2fc3678139329",
+  "canonical_dataset": ".m3/text-dp-20261015/lucene-format/manifest.tsv",
+  "qualification": "com.synexia.rewrite.LuceneReceiptQualification",
+  "source_seal_replay_fixed_point_drift_refusal": "PASS local Java21",
+  "runtime_method_checks": 191090,
+  "xml_binding_parity": "PASS local parsed-tree comparison",
+  "runtime_source_changed": false,
+  "runtime_sha256": "9c1a3ab23e51853873d267204c4b89a86a34915d5b1526930ef499dfc0a5efe1",
+  "product_ci_after_this_change": "Not observed at publication; inspect actual jobs",
+  "local_maven": "Unavailable; same qualification script executed directly"
+}

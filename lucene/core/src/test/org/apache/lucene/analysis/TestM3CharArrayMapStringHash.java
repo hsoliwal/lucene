@@ -15,7 +15,10 @@ public class TestM3CharArrayMapStringHash extends LuceneTestCase {
     for (int i = 0; i < words.length; i++) {
       String value = words[i];
       assertEquals(Integer.valueOf(i), map.get(value));
-      assertEquals(Integer.valueOf(i), map.get(new StringBuilder(value)));
+      StringBuilder mutable = new StringBuilder(value.length() + 1);
+      mutable.append(value).append('!');
+      mutable.setLength(value.length());
+      assertEquals(Integer.valueOf(i), map.get((CharSequence) mutable));
       assertEquals(Integer.valueOf(i), map.get(value.toCharArray(), 0, value.length()));
       assertTrue(map.containsKey(value));
     }
@@ -24,7 +27,11 @@ public class TestM3CharArrayMapStringHash extends LuceneTestCase {
     CharArrayMap<Integer> map = new CharArrayMap<>(4, true);
     map.put("AbC", 7);
     assertEquals(Integer.valueOf(7), map.get("ABC"));
-    assertEquals(Integer.valueOf(7), map.get(new StringBuilder("abc")));
+    StringBuilder abc = new StringBuilder();
+    abc.append('a');
+    abc.append('b');
+    abc.append('c');
+    assertEquals(Integer.valueOf(7), map.get((CharSequence) abc));
   }
   /**
    * The String hash fast path must not force a generic CharSequence into a String.

@@ -24,10 +24,10 @@ public final class M3TextReaders {
   private M3TextReaders() {}
 
   /**
-   * Borrows a stable, immutable UTF-16 sequence for an Analyzer/Tokenizer Reader boundary.
-   * The caller owns the backing lifetime; no text, lexicon or intern pool is duplicated.
-   * Closing the reader releases its reference. The returned reader follows Lucene's existing
-   * reusable-reader EOF/close semantics, including read-after-close returning EOF.
+   * Borrows a stable, immutable UTF-16 sequence for an Analyzer/Tokenizer Reader boundary. The
+   * caller owns the backing lifetime; no text, lexicon or intern pool is duplicated. Closing the
+   * reader releases its reference. The returned reader follows Lucene's existing reusable-reader
+   * EOF/close semantics, including read-after-close returning EOF.
    */
   public static Reader reader(CharSequence text) {
     Objects.requireNonNull(text, "text");

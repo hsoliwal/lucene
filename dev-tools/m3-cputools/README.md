@@ -1,36 +1,52 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License. You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
 # M3 composite-text receiver: hsoliwal/lucene
 
-This is an additive candidate from the canonical `hsoliwal/com.synexia` recipe owner.
-It does not establish whole-project, M3JDK, performance or canonical-promotion success.
+Canonical recipe ownership: `hsoliwal/com.synexia`, PR11556. This receiving
+pass continues PR7; it is not whole-project or whole-CPUTOOLS completion.
 
-Recipe: `com.synexia.m3.LuceneCompositeReader`. Receiving base: `1169cd2007d37c1e5354fdccf9aa7e4eef93d21a`.
-Canonical task: `synexia-openrewrite-recipes/recipes/cputools-native-20261014`.
-Public String entrypoints remain present. No alternate text/interner owner is introduced.
-
-The original Gradle build remains product authority.
-This bounded Maven POM is a review/control plane only. It invokes the existing Synexia
-source-seal owner; it never downloads, copies or forks a rewrite implementation here.
-Supply a locally available, reviewed Synexia recipe checkout:
+The original Gradle build remains the product authority. The following Maven
+entrypoint checks the exact postimage of `com.synexia.m3.LuceneRuntimePass` through
+the existing Synexia manifest engine, not a duplicate transformer:
 
 ```sh
-mvn -o -f dev-tools/m3-cputools/pom.xml -Dsynexia.recipe.home=/path/to/com.synexia verify
+mvn -f dev-tools/m3-cputools/pom.xml -Dsynexia.recipe.home=/path/to/com.synexia verify
 ```
 
-That command performs an exact hash/fixed-point check, not a product build/test.
-It was not executed locally because Maven was unavailable. For source-seal application,
-run the canonical Synexia `receive.py --kind lucene --target /path/to/lucene --mode apply`;
-all target/template hashes are checked before the first serial per-file write.
+This control check is not a product build or runtime proof. For explicit serial application:
 
-## Focused proof
+```sh
+python3 /path/to/com.synexia/synexia-openrewrite-recipes/recipes/cputools-runtime-20261015/verify.py --kind lucene --target /path/to/lucene --apply
+```
 
-`M3ReaderBaselineCheck.java` compares the exact before and candidate String behavior in
-separate JVMs, including exceptions/messages and destination-array state. The canonical
-verifier uses `-XX:-OmitStackTraceInFastThrow` to avoid history-dependent missing messages.
-`M3TextReadersCheck.java` tests immutable composites whose `toString` and `subSequence`
-throw, with random UTF-16, supplementary characters, unpaired surrogates and split boundaries.
-The focused Java 21 checks passed. Full Gradle/analyzer/M3JDK-runtime testing remains unexecuted.
+The earlier `cputools-native-20261014` recipe is historical; its exact old postimage
+is deliberately not the current postimage. Apply the initial recipe then this subsequent
+pass on their source-pinned preimages; do not weaken a hash guard to admit foreign changes.
+Fix the canonical payload, qualify, and rerun instead of hand-patching receiving output.
+Existing String APIs, immutable caller-owned text, and original whitespace/UTF-16 behavior
+remain authoritative. No alternate interner or runtime payload store is introduced.
 
-`M3TextReaders.reader(CharSequence)` returns the existing reusable reader; the caller must
-keep the supplied sequence immutable while it is consumed. String fast paths and the old
-reader's EOF/close behavior remain unchanged. This helper does not silently rewrite every
-Analyzer call site or change Lucene index formats.
+## Runtime gates
+
+The previous PR head passed existing JDK25 Windows, Linux and ARM test jobs; formatting
+checks failed. This pass fixes the exact reported formatting in recipe payloads and adds
+`TestM3TextReaders`, a real Analyzer/TokenStream differential test. It checks terms,
+UTF-16 offsets, positions, type and final offsets with no composite flattening.
+Historical standalone Reader checks remain. A new successful CI run is required for the
+new test and formatting changes; earlier passing jobs do not prove this new head.
+No index-format change, all-analyzer rewrite or real M3JDK OS-interning qualification is claimed.

@@ -46,9 +46,7 @@ final class ReusableStringReader extends Reader {
   @Override
   public int read() {
     if (pos < size) {
-      return s == null || s instanceof String
-          ? ((String) s).charAt(pos++)
-          : s.charAt(pos++);
+      return s == null || s instanceof String ? ((String) s).charAt(pos++) : s.charAt(pos++);
     } else {
       s = null;
       return -1;

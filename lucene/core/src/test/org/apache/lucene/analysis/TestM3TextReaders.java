@@ -94,13 +94,37 @@ public class TestM3TextReaders extends LuceneTestCase {
           assertEquals(expected, consume(analyzer.tokenStream("text", source)));
         }
       }
-      for (String text : List.of("", "abc", "A\ud83d\ude00B", "\ud800x\udc00", "x\u0000 y\n")) {
+      for (String text : List.of("", "abc", "A\ud83d\ude00B", "x\u0000 y\n")) {
         for (int split = 0; split <= text.length(); split++) {
           Result expected = consume(analyzer.tokenStream("text", text));
           try (Reader source =
               M3TextReaders.reader(new Composite(text.substring(0, split), text.substring(split)))) {
             assertEquals(expected, consume(analyzer.tokenStream("text", source)));
           }
+        }
+      }
+    }
+  }
+
+  public void testAnalyzerPreservesMalformedUtf16Rejection() throws Exception {
+    // MockTokenizer rejects these inputs even through the original String path.
+    // The Reader-level contract accepts raw UTF-16; analyzer validation is a separate contract.
+    for (String text : List.of("\ud800x\udc00", "\udc00", "\ud800")) {
+      for (int split = 0; split <= text.length(); split++) {
+        IllegalStateException expected;
+        try (Analyzer analyzer = new MockAnalyzer(random())) {
+          expected =
+              expectThrows(
+                  IllegalStateException.class, () -> consume(analyzer.tokenStream("text", text)));
+        }
+        try (Analyzer analyzer = new MockAnalyzer(random());
+            Reader source =
+                M3TextReaders.reader(
+                    new Composite(text.substring(0, split), text.substring(split)))) {
+          IllegalStateException actual =
+              expectThrows(
+                  IllegalStateException.class, () -> consume(analyzer.tokenStream("text", source)));
+          assertEquals(expected.getMessage(), actual.getMessage());
         }
       }
     }

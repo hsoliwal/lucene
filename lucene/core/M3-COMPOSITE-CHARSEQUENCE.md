@@ -4,6 +4,7 @@ This additive test-only patch verifies existing Lucene APIs that can consume
 non-flat, segmented logical UTF-16 characters with no explicit toString().
 
 Verified entry points by source inspection:
+
 - BytesRef(CharSequence): encodes UTF-16 units as Lucene-required UTF-8 bytes.
 - CharArraySet.contains(CharSequence): direct hash/character comparison.
 - CharArrayMap.get(CharSequence): direct hash/character comparison.
@@ -21,6 +22,7 @@ charAt for arbitrary CharSequence implementations. Preserve BytesRef's
 UTF-8 index wire format and unsigned byte order.
 
 Canonical Synexia original and SHA-256 source-pinned Maven/OpenRewrite recipe:
+
 - com.synexia.rewrite.M3LuceneCompositeInteropRecipe
 - synexia-openrewrite-recipes/src/main/resources/com/synexia/rewrite/m3-lucene-composite-interop/manifest.tsv
 

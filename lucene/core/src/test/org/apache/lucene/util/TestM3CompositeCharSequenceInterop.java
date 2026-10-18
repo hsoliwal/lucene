@@ -11,8 +11,8 @@ import org.apache.lucene.analysis.CharArraySet;
 import org.apache.lucene.tests.util.LuceneTestCase;
 
 /**
- * A contract proof that Lucene's existing CharSequence entry points already
- * accept logical segments without flattening them to an intermediate String.
+ * A contract proof that Lucene's existing CharSequence entry points already accept logical segments
+ * without flattening them to an intermediate String.
  */
 public class TestM3CompositeCharSequenceInterop extends LuceneTestCase {
   private static final class Segments implements CharSequence {
@@ -55,13 +55,20 @@ public class TestM3CompositeCharSequenceInterop extends LuceneTestCase {
 
   public void testBytesRefUtf8FromCompositeWithoutToString() {
     String[] corpus = {
-        "", "a", "ab", "cafe", "\u00E9", "a\u0301", "\u20AC", "\uD83D\uDE00",
-        "a\uD801\uDC1Cb", "\uD801\uDC1C\uD801\uDC1C"
+      "",
+      "a",
+      "ab",
+      "cafe",
+      "\u00E9",
+      "a\u0301",
+      "\u20AC",
+      "\uD83D\uDE00",
+      "a\uD801\uDC1Cb",
+      "\uD801\uDC1C\uD801\uDC1C"
     };
     for (String spelling : corpus) {
       for (int split = 0; split <= spelling.length(); split++) {
-        CharSequence input =
-            new Segments(spelling.substring(0, split), spelling.substring(split));
+        CharSequence input = new Segments(spelling.substring(0, split), spelling.substring(split));
         BytesRef actual = new BytesRef(input);
         BytesRef expected = new BytesRef(spelling);
         assertTrue("UTF-8 mismatch at split " + split, actual.bytesEquals(expected));
@@ -85,8 +92,7 @@ public class TestM3CompositeCharSequenceInterop extends LuceneTestCase {
 
     CharArrayMap<Integer> dictionary = new CharArrayMap<>(4, false);
     dictionary.put("word\uD83D\uDE00", 7);
-    assertEquals(
-        Integer.valueOf(7), dictionary.get(new Segments("word\uD83D", "\uDE00")));
+    assertEquals(Integer.valueOf(7), dictionary.get(new Segments("word\uD83D", "\uDE00")));
     assertNull(dictionary.get(new Segments("word", "x")));
   }
 
@@ -94,8 +100,6 @@ public class TestM3CompositeCharSequenceInterop extends LuceneTestCase {
     CharArrayMap<Integer> dictionary = new CharArrayMap<>(2, false);
     // CharArrayMap.put(CharSequence) calls toString() by its existing contract;
     // do not rewrite that producer path without separate compatibility proof.
-    expectThrows(
-        AssertionError.class,
-        () -> dictionary.put(new Segments("foo", "bar"), 1));
+    expectThrows(AssertionError.class, () -> dictionary.put(new Segments("foo", "bar"), 1));
   }
 }

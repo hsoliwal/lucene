@@ -98,7 +98,8 @@ public class TestM3TextReaders extends LuceneTestCase {
         for (int split = 0; split <= text.length(); split++) {
           Result expected = consume(analyzer.tokenStream("text", text));
           try (Reader source =
-              M3TextReaders.reader(new Composite(text.substring(0, split), text.substring(split)))) {
+              M3TextReaders.reader(
+                  new Composite(text.substring(0, split), text.substring(split)))) {
             assertEquals(expected, consume(analyzer.tokenStream("text", source)));
           }
         }

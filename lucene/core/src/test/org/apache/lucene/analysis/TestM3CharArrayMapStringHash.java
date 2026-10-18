@@ -8,8 +8,9 @@ import org.apache.lucene.tests.util.LuceneTestCase;
 public class TestM3CharArrayMapStringHash extends LuceneTestCase {
   public void testCaseSensitiveStringAndCharSequenceParity() {
     CharArrayMap<Integer> map = new CharArrayMap<>(8, false);
-    String[] words = {"", "a", "Straße", "é", "\uD800", "\uDC00",
-        "a\uD83D\uDE00b", "\uFFFF", "a\u0000b"};
+    String[] words = {
+      "", "a", "Straße", "é", "\uD800", "\uDC00", "a\uD83D\uDE00b", "\uFFFF", "a\u0000b"
+    };
     for (int i = 0; i < words.length; i++) map.put(words[i], i);
     for (int i = 0; i < words.length; i++) {
       String value = words[i];
@@ -19,6 +20,7 @@ public class TestM3CharArrayMapStringHash extends LuceneTestCase {
       assertTrue(map.containsKey(value));
     }
   }
+
   public void testIgnoreCaseRetainsUnicodeCodePointFolding() {
     CharArrayMap<Integer> map = new CharArrayMap<>(4, true);
     map.put("AbC", 7);

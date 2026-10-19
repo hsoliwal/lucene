@@ -1,16 +1,19 @@
 # SPDX-License-Identifier: Apache-2.0
 import importlib.util
 import os
-from pathlib import Path
-import subprocess
 import shutil
+import subprocess
 import tempfile
 import unittest
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-spec = importlib.util.spec_from_file_location("payload_producer", ROOT / "source-overlay/produce.py")
+spec = importlib.util.spec_from_file_location(
+    "payload_producer", ROOT / "source-overlay/produce.py"
+)
 producer = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(producer)
+
 
 class UnnamedLoweringTest(unittest.TestCase):
     def test_unused_variables_compile_without_unnamed_preview(self):
@@ -36,13 +39,32 @@ class Fixture {
             path = Path(directory) / "Fixture.java"
             path.write_text(transformed)
             java = os.environ.get("M3_TEST_JDK") or os.environ.get("JAVA_HOME")
-            javac = str(Path(java) / "bin/javac") if java else (shutil.which("javac") or "javac")
-            result = subprocess.run([javac, "--release", "21", str(path)], capture_output=True, text=True)
+            javac = (
+                str(Path(java) / "bin/javac")
+                if java
+                else (shutil.which("javac") or "javac")
+            )
+            result = subprocess.run(
+                [javac, "--release", "21", str(path)],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
             self.assertEqual(0, result.returncode, result.stderr)
         for line in source.splitlines():
-            if any(marker in line for marker in ("String literal", "char character", "// _", "/* _", "_ stays")):
+            if any(
+                marker in line
+                for marker in (
+                    "String literal",
+                    "char character",
+                    "// _",
+                    "/* _",
+                    "_ stays",
+                )
+            ):
                 self.assertIn(line, transformed)
         self.assertEqual(transformed, producer.rename_unnamed(transformed))
+
 
 if __name__ == "__main__":
     unittest.main()

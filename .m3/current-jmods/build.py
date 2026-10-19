@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: Apache-2.0
+# License: https://www.apache.org/licenses/LICENSE-2.0
 """Build all 29 current-fork Lucene production modules on Java 21 preview.
 
 Only the canonical Synexia OpenRewrite SDK transforms staged source or emits

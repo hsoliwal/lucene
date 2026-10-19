@@ -102,6 +102,12 @@ public class CheckLicensesPlugin extends LuceneGradlePlugin {
                 ".vscode/**",
                 "LICENSE.txt",
                 "NOTICE.txt",
+
+                // M3 JMOD descriptor images are SHA-256-sealed in dependency-lock.json.
+                // Retained third-party LICENSE/COPYING texts are legal evidence, not source files.
+                // Keep their original bytes intact; all first-party tools still require headers.
+                ".m3/current-jmods/descriptors/*.txt",
+                ".m3/current-jmods/legal/**",
                 "build-options.properties",
                 "dev-tools/**",
                 "gradle/**",

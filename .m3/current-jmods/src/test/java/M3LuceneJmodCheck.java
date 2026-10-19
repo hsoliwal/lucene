@@ -184,4 +184,3 @@ public final class M3LuceneJmodCheck {
     if (!condition) throw new AssertionError(message);
   }
 }
-

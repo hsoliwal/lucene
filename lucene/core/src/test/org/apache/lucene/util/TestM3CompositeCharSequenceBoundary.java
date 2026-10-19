@@ -21,11 +21,11 @@ import org.apache.lucene.analysis.tokenattributes.CharTermAttributeImpl;
 import org.apache.lucene.tests.util.LuceneTestCase;
 
 /**
- * Verifies that existing Lucene CharSequence ingest works with immutable segmented text such as
- * M3 String views, without asking callers for a flattened intermediate String.
+ * Verifies that existing Lucene CharSequence ingest works with immutable segmented text such as M3
+ * String views, without asking callers for a flattened intermediate String.
  *
  * <p>BytesRef still owns UTF-8 bytes; CharTermAttributeImpl remains a mutable char[] attribute.
- * These contracts are intentionally not changed by this test.</p>
+ * These contracts are intentionally not changed by this test.
  */
 public class TestM3CompositeCharSequenceBoundary extends LuceneTestCase {
 
@@ -110,8 +110,8 @@ public class TestM3CompositeCharSequenceBoundary extends LuceneTestCase {
   public void testFixedSeedUtf16CodeUnitSplitsHaveIdenticalEncodedBytes() {
     final Random random = new Random(20261014L);
     final char[] units = {
-      'a', 'Z', '\u00e9', '\u4e2d', '\u0301', ' ', '\ud83d', '\ude00',
-      '\ud800', '\udc00', '\u2028', '\u200b', '\ufffd'
+      'a', 'Z', '\u00e9', '\u4e2d', '\u0301', ' ', '\ud83d', '\ude00', '\ud800', '\udc00', '\u2028',
+      '\u200b', '\ufffd'
     };
     for (int sample = 0; sample < 512; sample++) {
       int length = random.nextInt(70);

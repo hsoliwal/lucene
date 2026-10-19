@@ -53,4 +53,3 @@ public final class Jdk21ExpressionsCheck {
     if (!condition) throw new AssertionError(message);
   }
 }
-

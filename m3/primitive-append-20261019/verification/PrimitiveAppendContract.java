@@ -1,7 +1,14 @@
 // SPDX-FileCopyrightText: 2026 Hitesh Soliwal and Contributors to the Synexia Project
 // SPDX-License-Identifier: Apache-2.0
-import java.util.*;
-import org.apache.lucene.internal.hppc.*;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Random;
+import org.apache.lucene.internal.hppc.FloatArrayList;
+import org.apache.lucene.internal.hppc.FloatCursor;
+import org.apache.lucene.internal.hppc.IntArrayList;
+import org.apache.lucene.internal.hppc.IntCursor;
+import org.apache.lucene.internal.hppc.LongArrayList;
+import org.apache.lucene.internal.hppc.LongCursor;
 public final class PrimitiveAppendContract {
   private static long checks, transcript = 1;
   private static void check(boolean condition) { checks++; if (!condition) throw new AssertionError(checks); }

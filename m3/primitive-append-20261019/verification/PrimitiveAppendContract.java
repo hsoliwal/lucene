@@ -1,5 +1,6 @@
 // SPDX-FileCopyrightText: 2026 Hitesh Soliwal and Contributors to the Synexia Project
 // SPDX-License-Identifier: Apache-2.0
+// License: https://www.apache.org/licenses/LICENSE-2.0
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Random;

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: Apache-2.0
+# License: https://www.apache.org/licenses/LICENSE-2.0
 """Canonical payload producer, never called by the receiving product builder.
 
 Source application belongs exclusively to the canonical Synexia OpenRewrite

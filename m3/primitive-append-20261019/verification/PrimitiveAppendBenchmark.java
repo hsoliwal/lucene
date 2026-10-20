@@ -1,5 +1,6 @@
 // SPDX-FileCopyrightText: 2026 Hitesh Soliwal and Contributors to the Synexia Project
 // SPDX-License-Identifier: Apache-2.0
+// License: https://www.apache.org/licenses/LICENSE-2.0
 package com.synexia.collectionwitness;
 
 import org.apache.lucene.internal.hppc.FloatArrayList;

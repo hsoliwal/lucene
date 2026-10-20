@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
+// License: https://www.apache.org/licenses/LICENSE-2.0
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.text.ParseException;
@@ -53,4 +54,3 @@ public final class Jdk21ExpressionsCheck {
     if (!condition) throw new AssertionError(message);
   }
 }
-

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
+// License: https://www.apache.org/licenses/LICENSE-2.0
 import org.apache.lucene.util.VectorUtil;
 
 /** The real core provider must retain its scalar implementation on Java 21. */

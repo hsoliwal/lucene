@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- License: https://www.apache.org/licenses/LICENSE-2.0 -->
 # Current Lucene fork as Java 21 JMODs
 
 This optional build lane compiles the actual production sources from

@@ -125,7 +125,10 @@ public final class TernaryLongHeap {
       long result = heap[1]; // save first value
       heap[1] = heap[size]; // move last to first
       size--;
-      TernaryLongHeap.downHeap(heap, 1, size, ARITY); // adjust heap
+      // Empty heaps have no children to reorder after removing their last element.
+      if (size > 0) {
+        TernaryLongHeap.downHeap(heap, 1, size, ARITY); // adjust heap
+      }
       return result;
     } else {
       throw new IllegalStateException("The heap is empty");

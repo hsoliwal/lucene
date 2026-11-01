@@ -27,3 +27,11 @@ Focused Gradle owner tests:
 ```bash
 ./gradlew :lucene:core:test --tests 'org.apache.lucene.util.TestLongHeap' --tests 'org.apache.lucene.util.TestTernaryLongHeap'
 ```
+
+## Serial third source atom: skip empty-heap sift on last-element pop (2026-11-01)
+
+The **third stage** is a separate exact source-sealed reuse of the existing canonical [Synexia recipe PR #15080](https://github.com/hsoliwal/com.synexia/pull/15080), crate `m3-lucene-singleton-pop-20261101`. Its four source/test preimages are **exactly the stage-1/2 postimages**; earlier original and equal-root source history is unchanged.
+
+Both binary `LongHeap.pop()` and ternary `TernaryLongHeap.pop()` now omit the no-op `downHeap` only after decrementing to `size == 0`. The old heap routine merely read and rewrote the same root for that case. The optimized path retains its previous stale backing array slot and identity, its `IllegalStateException` on an already-empty heap, its return value, and all multi-element behavior. This does **not** change APIs, JNI, GC ownership or ASF licensing.
+
+The two original `TestLongHeap` / `TestTernaryLongHeap` sources each gain one dedicated singleton-pop regression for capacities 1/2/7/31 and signed/extreme values, checking entire physical arrays, empty-pop exceptions, and reuse. An independent Java21 `-Xlint:all -Werror` proof passed **141,702** original-versus-refined arity-2 and arity-3 heap operations with `PriorityQueue` and full-array comparisons. This remains **ISOLATED evidence**. The actual Lucene Gradle tests and the canonical Maven/OpenRewrite fixed-point/refusal suite are **PENDING**; no new speed measurement is claimed.

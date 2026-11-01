@@ -168,6 +168,27 @@ public class TestLongHeap extends LuceneTestCase {
     }
   }
 
+  /**
+   * Removing the last element does not alter the array's inactive slots or ownership.
+   * A subsequent empty pop retains its original exception class.
+   */
+  public void testSingletonPopPreservesArraySlotsAndException() {
+    for (int capacity : new int[] {1, 2, 7, 31}) {
+      for (long value : new long[] {Long.MIN_VALUE, -1L, 0L, 1L, Long.MAX_VALUE}) {
+        LongHeap heap = new LongHeap(capacity);
+        heap.push(value);
+        long[] prior = heap.getHeapArray().clone();
+        assertEquals(value, heap.pop());
+        assertEquals(0, heap.size());
+        assertArrayEquals(prior, heap.getHeapArray());
+        expectThrows(IllegalStateException.class, () -> heap.pop());
+        heap.push(value);
+        assertEquals(value, heap.pop());
+        assertEquals(0, heap.size());
+      }
+    }
+  }
+
   public void testInvalid() {
     expectThrows(IllegalArgumentException.class, () -> new LongHeap(-1));
     expectThrows(IllegalArgumentException.class, () -> new LongHeap(0));

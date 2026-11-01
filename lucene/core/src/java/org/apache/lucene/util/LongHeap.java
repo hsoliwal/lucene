@@ -125,7 +125,10 @@ public final class LongHeap {
       long result = heap[1]; // save first value
       heap[1] = heap[size]; // move last to first
       size--;
-      downHeap(1); // adjust heap
+      // Once the final element is removed, there is no child to sift.
+      if (size > 0) {
+        downHeap(1); // adjust heap
+      }
       return result;
     } else {
       throw new IllegalStateException("The heap is empty");

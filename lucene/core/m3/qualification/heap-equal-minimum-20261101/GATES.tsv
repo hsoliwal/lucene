@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: Apache-2.0
+gate	status	evidence
+source_preimage	PASS	full_original_upstream_Git_blob_pins
+target_source_identity	PASS	canonical_synexia_byte_exact_postimages
+isolated_java21	PASS_ISOLATED	321280_mechanical_oracle_compares
+target_lucene_gradle	PENDING	TestLongHeap_run
+canonical_maven_openrewrite	PENDING	replay_fixedpoint_refusal
+jni	NOT_APPLICABLE	no_native_boundary_in_LongHeap
+public_api	UNCHANGED	method_descriptors_package_and_class_preserved
+performance	PENDING	calibrated_A_A
+merge	HOLD	pending_target_compiler_tests

@@ -95,6 +95,10 @@ public final class LongHeap {
       if (value < heap[1]) {
         return false;
       }
+      // A valid bounded min-heap is unchanged by offering its existing minimum.
+      if (value == heap[1]) {
+        return true;
+      }
       updateTop(value);
       return true;
     }

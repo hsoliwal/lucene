@@ -95,6 +95,10 @@ public final class TernaryLongHeap {
       if (value < heap[1]) {
         return false;
       }
+      // An unchanged minimum needs no sift in this valid primitive ternary heap.
+      if (value == heap[1]) {
+        return true;
+      }
       updateTop(value);
       return true;
     }

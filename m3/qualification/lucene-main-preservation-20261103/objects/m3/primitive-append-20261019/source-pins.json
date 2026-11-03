@@ -1,0 +1,50 @@
+{
+  "canonical_repository": "hsoliwal/com.synexia",
+  "canonical_commit": "6edef08c6ab5a3b29dad74a13d3f20df687e0ef5",
+  "canonical_crate": "synexia-openrewrite-recipes/crates/m3-all-fork-array-pass-20261019",
+  "receiving_base": "ec6ecef838e3c1f93ce19d1c353f1e942efab7b4",
+  "inputs": [
+    {
+      "repository": "hsoliwal/lucene",
+      "commit": "ec6ecef838e3c1f93ce19d1c353f1e942efab7b4",
+      "tree": "9c1812f0790849fad77b0e78c0f37bc20aad5065",
+      "path": "lucene/core/src/java/org/apache/lucene/internal/hppc/FloatArrayList.java",
+      "before_sha256": "2f995029fb0146ca0a570f12173af796f4eb835f37d6b807550b65145a86cf79",
+      "before_blob": "59818341c037e39a8b90507f6e72fb1bbfc12eff",
+      "after_sha256": "04403b41a4e2ffb8ad25186cc830b937c6f66bc57d41dfcb4f8875e170c1e0f8",
+      "after_blob": "465cef138fc48b7368877bae323997afc312660c",
+      "lane": "java",
+      "license": "Apache-2.0",
+      "template": "0001-FloatArrayList.java.txt",
+      "crate": "all-fork-arrays-lucene-20261019"
+    },
+    {
+      "repository": "hsoliwal/lucene",
+      "commit": "ec6ecef838e3c1f93ce19d1c353f1e942efab7b4",
+      "tree": "9c1812f0790849fad77b0e78c0f37bc20aad5065",
+      "path": "lucene/core/src/java/org/apache/lucene/internal/hppc/IntArrayList.java",
+      "before_sha256": "b3bab592fcdcf7ff3e01f96cfee495a6173f525ac924c6f337a35ac7cad162cf",
+      "before_blob": "c43704ca5db66195637f75d67d280e5190b6721b",
+      "after_sha256": "1356d5491d1d81b8c1ec59f3856083448b5032509f20ac2f6e7056fd0fa2c68f",
+      "after_blob": "5957aa5a5d920998ba8da942e19b5d5d77083c87",
+      "lane": "java",
+      "license": "Apache-2.0",
+      "template": "0002-IntArrayList.java.txt",
+      "crate": "all-fork-arrays-lucene-20261019"
+    },
+    {
+      "repository": "hsoliwal/lucene",
+      "commit": "ec6ecef838e3c1f93ce19d1c353f1e942efab7b4",
+      "tree": "9c1812f0790849fad77b0e78c0f37bc20aad5065",
+      "path": "lucene/core/src/java/org/apache/lucene/internal/hppc/LongArrayList.java",
+      "before_sha256": "36b53de97a2835b1e5c7a2b7deae0d5f2aa270d2dc9da86bad574671fda308ee",
+      "before_blob": "2c1d1256ff793e827d03d2bc1c80584ab3de9ccb",
+      "after_sha256": "5103589a53895b389a45245a5b1f29f1da30bd6bbb9bfe57eaf29fcdb36f5f7f",
+      "after_blob": "cf07ab8a22bb462e78f7cc0d89ab8e53ad869e31",
+      "lane": "java",
+      "license": "Apache-2.0",
+      "template": "0003-LongArrayList.java.txt",
+      "crate": "all-fork-arrays-lucene-20261019"
+    }
+  ]
+}

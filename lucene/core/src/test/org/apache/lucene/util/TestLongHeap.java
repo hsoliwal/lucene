@@ -122,6 +122,73 @@ public class TestLongHeap extends LuceneTestCase {
     }
   }
 
+  /**
+   * An accepted equal-minimum offer leaves every heap slot unchanged.
+   * PriorityQueue independently verifies the bounded top-k multiset.
+   */
+  public void testEqualMinimumOfferDoesNotSift() {
+    for (int capacity : new int[] {1, 2, 3, 7, 31, 64}) {
+      for (int seed = 0; seed < 8; seed++) {
+        LongHeap heap = new LongHeap(capacity);
+        java.util.PriorityQueue<Long> oracle = new java.util.PriorityQueue<>();
+        Random random = new Random(0x4d334cL + (long) capacity * 17 + seed);
+        for (int step = 0; step < 1000; step++) {
+          long min = oracle.isEmpty() ? 0L : oracle.peek();
+          long value = switch (step % 13) {
+            case 0, 1, 2, 3, 4 -> min;
+            case 5 -> min == Long.MIN_VALUE ? Long.MIN_VALUE : min - 1;
+            case 6 -> min == Long.MAX_VALUE ? Long.MAX_VALUE : min + 1;
+            case 7 -> Long.MIN_VALUE;
+            case 8 -> Long.MAX_VALUE;
+            case 9 -> 0L;
+            default -> random.nextInt(43) - 21;
+          };
+          boolean full = oracle.size() == capacity;
+          long[] before = heap.getHeapArray().clone();
+          boolean expected = !full || value >= oracle.peek();
+          assertEquals(expected, heap.insertWithOverflow(value));
+          if (expected) {
+            if (full) {
+              oracle.remove();
+            }
+            oracle.add(value);
+          }
+          assertEquals(oracle.size(), heap.size());
+          assertEquals(oracle.peek().longValue(), heap.top());
+          if (full && value == min) {
+            assertArrayEquals(before, heap.getHeapArray());
+          }
+          checkValidity(heap);
+        }
+        while (!oracle.isEmpty()) {
+          assertEquals(oracle.remove().longValue(), heap.pop());
+        }
+        assertEquals(0, heap.size());
+      }
+    }
+  }
+
+  /**
+   * Removing the last element does not alter the array's inactive slots or ownership.
+   * A subsequent empty pop retains its original exception class.
+   */
+  public void testSingletonPopPreservesArraySlotsAndException() {
+    for (int capacity : new int[] {1, 2, 7, 31}) {
+      for (long value : new long[] {Long.MIN_VALUE, -1L, 0L, 1L, Long.MAX_VALUE}) {
+        LongHeap heap = new LongHeap(capacity);
+        heap.push(value);
+        long[] prior = heap.getHeapArray().clone();
+        assertEquals(value, heap.pop());
+        assertEquals(0, heap.size());
+        assertArrayEquals(prior, heap.getHeapArray());
+        expectThrows(IllegalStateException.class, () -> heap.pop());
+        heap.push(value);
+        assertEquals(value, heap.pop());
+        assertEquals(0, heap.size());
+      }
+    }
+  }
+
   public void testInvalid() {
     expectThrows(IllegalArgumentException.class, () -> new LongHeap(-1));
     expectThrows(IllegalArgumentException.class, () -> new LongHeap(0));

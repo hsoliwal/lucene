@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: Apache-2.0
+gate	status	evidence	next
+source_base	PASS	hsoliwal/lucene@d5dfbe196f4c47c310fca8e18026f53d4689771d	refuse branch drift
+source_pre_blob	PASS	544f46a7291c695c685282061967f0012f033e52	GitHub full source
+source_post_blob	PASS	d013a253c0dd5c0880c60d9b67fad7334b25c96c	GitHub postimage readback
+source_pre_sha256	PASS	cc7ccd80308828decc44c602ef637c03d80dc07d14c9ce25ba67c3ae1d774e91	full UTF-8 source
+source_post_sha256	PASS	1dca01288423af436393e8db9eb064ad2099e075acf8fee87ca889841c343f0a	full UTF-8 source
+single_source_method	PASS	two checks added only inside FixedBitSet.intoArray; no public API change	full javap pending
+standalone_compile	PASS	Java21 javac -Xlint:all -Werror exact-method oracle	full Lucene compile pending
+standalone_jit	PASS	124001 deterministic output and exception comparisons	fork JUnit
+standalone_interpreted	PASS	124001 -Xint deterministic comparisons	fork JUnit
+early_bit_tiny_output	SAMPLED_IMPROVEMENT	one-int output, 1048576-bit range; 5 ratios .0040 .0019 .0023 .0014 .0086	JMH cross-platform
+late_bit_tiny_output	MIXED	late-hit case includes sample ratio 1.277	workload performance hold
+fork_test_source	COMMITTED	TestFixedBitSetIntoArrayCapacity.java; 4 real LuceneTestCase methods	Gradle test task
+full_lucene_gradle	NOT_RUN	offline dependency closure unavailable	Gradle CI
+binary_compatibility	NOT_RUN	no full-source javap, codec or serialization suite	Gradle build
+default_branch	UNCHANGED	review branch only	no automatic merge

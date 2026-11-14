@@ -220,8 +220,17 @@ public class CharArrayMap<V> extends AbstractMap<Object, V> {
     for (int i = 0; i < oldkeys.length; i++) {
       char[] text = oldkeys[i];
       if (text != null) {
-        // todo: could be faster... no need to compare strings on collision
-        final int slot = getSlot(text, 0, text.length);
+        // All source keys are distinct; while rebuilding, only free positions matter.
+        // Keep the original hash and odd-step probe sequence without key comparisons.
+        int code = getHashCode(text, 0, text.length);
+        int slot = code & (keys.length - 1);
+        if (keys[slot] != null) {
+          final int inc = ((code >> 8) + code) | 1;
+          do {
+            code += inc;
+            slot = code & (keys.length - 1);
+          } while (keys[slot] != null);
+        }
         keys[slot] = text;
         values[slot] = oldvalues[i];
       }

@@ -1,8 +1,0 @@
-# SPDX-License-Identifier: Apache-2.0
-# Independent Java21.0.12.1 warmed standalone-oracle measurements: nine alternating samples/process, sixteen rehashes/sample. Positive candidate ratios below 1 are improvements.
-process	assertions	orig_random4096_ns	candidate_random4096_ns	random_ratio	orig_collision512_ns	candidate_collision512_ns	collision_ratio
-1	146148	1991098	1612377	0.8098	8449068	1400658	0.1658
-2	146148	1609883	1559617	0.9688	6079260	1455200	0.2394
-3	146148	3993392	3813040	0.9548	7755835	1295570	0.1670
-4	146148	1948133	1785037	0.9163	8213363	1334428	0.1625
-5	146148	1584946	1914012	1.2076	8226344	1439427	0.1750

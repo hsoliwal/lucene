@@ -974,6 +974,9 @@ public final class FixedBitSet extends BitSet {
         return word2Array(word, from + base, array, offset);
       }
       offset = word2Array(word, from + base, array, offset);
+      if (offset == array.length) {
+        return offset;
+      }
       from += numBitsTilNextWord;
       assert (from & 0x3F) == 0;
     }
@@ -981,6 +984,9 @@ public final class FixedBitSet extends BitSet {
     for (int i = from >> 6, end = to >> 6; i < end; ++i) {
       long word = bits[i];
       offset = word2Array(word, base + (i << 6), array, offset);
+      if (offset == array.length) {
+        return offset;
+      }
     }
 
     // Now handle remaining bits in the last partial word

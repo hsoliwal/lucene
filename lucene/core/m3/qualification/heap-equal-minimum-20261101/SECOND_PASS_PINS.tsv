@@ -1,5 +1,0 @@
-# SPDX-License-Identifier: Apache-2.0
-# Second serial source receiver; exact first-stage preimage retained in private Synexia.
-path	original_git_blob	receiver_post_git_blob	state
-lucene/core/src/java/org/apache/lucene/util/TernaryLongHeap.java	75c3e7f0d11720bfab9ac1acaa76d64acef6bca1	a8b8c729b0e5607e0a8c3a6e1bf48236dac573ab	BYTE_IDENTICAL_CANONICAL
-lucene/core/src/test/org/apache/lucene/util/TestTernaryLongHeap.java	335116e7324bbeacd760650399f829ed423d8ec2	c3d16fbe20ef2d353ea7bf890f9ed1ad6ae2e3e9	BYTE_IDENTICAL_CANONICAL

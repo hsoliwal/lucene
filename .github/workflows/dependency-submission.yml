@@ -18,6 +18,10 @@ concurrency:
 jobs:
   dependency-submission:
     name: Submit gradle dependencies
+    # Upstream-only: submitting snapshots needs the repository dependency graph, which is
+    # disabled in this fork ("The Dependency graph is disabled for this repository").
+    # The job already has contents: write, so permissions are not the problem.
+    if: github.repository == 'apache/lucene'
     runs-on: ubuntu-26.04-arm
     timeout-minutes: 15
     permissions:

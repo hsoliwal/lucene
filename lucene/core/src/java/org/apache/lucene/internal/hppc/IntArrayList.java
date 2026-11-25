@@ -17,6 +17,8 @@
 
 package org.apache.lucene.internal.hppc;
 
+// Modified 2026 by Hitesh Soliwal and Contributors: copy eligible primitive ranges directly.
+
 import static org.apache.lucene.internal.hppc.HashContainers.DEFAULT_EXPECTED_ELEMENTS;
 
 import java.util.Arrays;
@@ -100,6 +102,20 @@ public class IntArrayList implements Iterable<IntCursor>, Cloneable, Accountable
   public int addAll(IntArrayList list) {
     final int size = list.size();
     ensureBufferSpace(size);
+
+    // Preserve subclass hooks and public-buffer alias/invalid-state behavior on the iterator path.
+    if (size > 0
+        && getClass() == IntArrayList.class
+        && list.getClass() == IntArrayList.class
+        && list.buffer != null
+        && size <= list.buffer.length
+        && elementsCount >= 0
+        && size <= buffer.length - elementsCount
+        && (list.buffer != buffer || elementsCount >= size)) {
+      System.arraycopy(list.buffer, 0, buffer, elementsCount, size);
+      elementsCount += size;
+      return size;
+    }
 
     for (IntCursor cursor : list) {
       add(cursor.value);
